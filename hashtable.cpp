@@ -88,11 +88,8 @@ string verificar() {
 			else valido = true;
 		}
 	}
-
 	return entrada;
 }
-
-
 
 int obtenerIntValido() {
 	int number;
@@ -125,16 +122,32 @@ void insertarEstudiante(int id) {
 		else break;
 	}
 	nuevoEstudiante->siguiente = nullptr;
-
-	if (tablaHash[indice-1] == nullptr) {
-		tablaHash[indice-1] = nuevoEstudiante;
+	if (indice != 0) 
+	{
+		if (tablaHash[indice-1] == nullptr) 
+		{
+			tablaHash[indice-1] = nuevoEstudiante;
+		}
+		else {
+			NodoEstudiante* actual = tablaHash[indice-1];
+			while (actual->siguiente != nullptr) {
+				actual = actual->siguiente;
+			}
+			actual->siguiente = nuevoEstudiante;
+		}
 	}
 	else {
-		NodoEstudiante* actual = tablaHash[indice-1];
-		while (actual->siguiente != nullptr) {
-			actual = actual->siguiente;
+		if (tablaHash[indice] == nullptr)
+		{
+			tablaHash[indice] = nuevoEstudiante;
 		}
-		actual->siguiente = nuevoEstudiante;
+		else {
+			NodoEstudiante* actual = tablaHash[indice];
+			while (actual->siguiente != nullptr) {
+				actual = actual->siguiente;
+			}
+			actual->siguiente = nuevoEstudiante;
+		}
 	}
 }
 
@@ -281,6 +294,7 @@ int main() {
 			if (contador >= numEstudiantes)
 			{
 				cout << "ya se a alcanzado el limite de estudiantes en la seccion\n";
+				contador = 0;
 				cls();
 				break;
 			}
@@ -333,6 +347,7 @@ int main() {
 			cout << "ID a eliminar: ";
 			int id = obtenerIntValido();
 			eliminarRegistroPorID(id);
+			contador--;
 			cls();
 			break;
 		}
@@ -343,6 +358,7 @@ int main() {
 				continue;
 			}
 			eliminarTodosLosRegistros();
+			contador = 0;
 			cls();
 			break;
 		}
@@ -356,8 +372,4 @@ int main() {
 	} while (opcion != 6);
 
 	return 0;
-}
-    } while (opcion != 6);
-
-    return 0;
 }
